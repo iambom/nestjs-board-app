@@ -3,7 +3,12 @@
  * nestjs 에서는 dto 를 class 로 정의하는 것을 추천
  */
 
+import { IsNotEmpty } from 'class-validator';
+
 export class CreateBoardDto {
+  @IsNotEmpty()
   title: string;
+
+  @IsNotEmpty()
   description: string;
 }
