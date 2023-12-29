@@ -1,5 +1,5 @@
 import { BadRequestException, PipeTransform } from '@nestjs/common';
-import { BoardStatus } from '../board.model';
+import { BoardStatus } from '../board-status.enum';
 
 /**
  * 모든 커스텀 파이프는 PipeTransform 을 가지고 만들어야함.
