@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UsePipes,
   ValidationPipe,
@@ -12,6 +13,8 @@ import {
 import { BoardsService } from './boards.service';
 import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
+import { BoardStatus } from './board-status.enum';
 @Controller('/boards')
 export class BoardsController {
   constructor(private boardsService: BoardsService) {}
@@ -31,5 +34,13 @@ export class BoardsController {
   /** id는 integer여야 하므로 파라미터 레벨에서 파이프 넣어줌 */
   deleteBoard(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.boardsService.deleteBoard(id);
+  }
+
+  @Patch('/:id/status')
+  updateBoardStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', BoardStatusValidationPipe) status: BoardStatus,
+  ) {
+    return this.boardsService.updateBoardStatus(id, status);
   }
 }
