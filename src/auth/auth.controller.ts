@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
 
@@ -18,4 +19,17 @@ export class AuthController {
   ): Promise<{ accessToken: string }> {
     return this.authService.signIn(authCredentialDto);
   }
+
+  @Post('/test')
+  @UseGuards(AuthGuard())
+  authTest(@Req() req) {
+    console.log('req', req);
+  }
 }
+
+/**
+ * AuthGuard()
+ * passport 모듈에서 가져옴
+ * req 안에 validate 에서 return 해준 user가 들어가게 됨
+ * 인증 미들웨어 처리(토큰이 없거나 잘못됐으면 401 에러발생 등)
+ */
