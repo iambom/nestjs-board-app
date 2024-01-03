@@ -45,8 +45,11 @@ export class BoardsController {
 
   @Delete('/:id')
   /** id는 integer여야 하므로 파라미터 레벨에서 파이프 넣어줌 */
-  deleteBoard(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.boardsService.deleteBoard(id);
+  deleteBoard(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+  ): Promise<void> {
+    return this.boardsService.deleteBoard(id, user);
   }
 
   @Patch('/:id/status')
