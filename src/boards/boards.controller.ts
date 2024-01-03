@@ -25,8 +25,8 @@ export class BoardsController {
   constructor(private boardsService: BoardsService) {}
 
   @Get()
-  getAllBoards(): Promise<Board[]> {
-    return this.boardsService.getAllBoards();
+  getAllBoards(@GetUser() user: User): Promise<Board[]> {
+    return this.boardsService.getAllBoards(user);
   }
 
   @Get('/:id')
@@ -57,3 +57,16 @@ export class BoardsController {
     return this.boardsService.updateBoardStatus(id, status);
   }
 }
+
+/**
+ * QueryBuilder
+ * nestjs의 repository API 로 웬만한 거 다 되지만 where절 등 복잡하게 사용해야될 때 QueryBuilder 사용
+ *
+ * pgAdmin 테이블 아래 쿼리에 where 등이 추가된 쿼리 데이터 반환시키나봄
+ * SELECT * FROM public.board
+ * ORDER BY id ASC
+ *
+ * query.getMany() <-> getOne()
+ * 나오는 데이터 전부 다 가져옴
+ *
+ */
